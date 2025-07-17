@@ -1,47 +1,49 @@
-import React , { Component } from 'react';
-import {Link} from 'react-router-dom';
-class ListUser extends Component {
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
-constructor(props){
-  super(props);
-  this.state = {
-    datauser : []
-  }
-}
 
-  componentDidMount(){
-    fetch('https://www.baznaspayakumbuh.com/api/api_tabloit_pulsa.php')
-    .then(response=>response.json()
-    )
-    .then(
-      (data)=> { this.setState({datauser:data.result}) }
-    )
-  }
+const Add = () => {
 
-  render(){
-   const listuser = this.state.datauser.map((user)=>{
-        return (
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    // const em = document.getElementById("emails").value;
+    // console.log(em);
 
-            <div className="col-md-4 card" key={user.article_id}>
-              <Link to={'/detail/'+user.article_id}>
-              <img src={user.image} width="100%"/>
-              </Link>
-                <h5 >{user.title}</h5>
-                <p>{user.description.substr(1, 150)}</p>
+    const check = async () => {
+        console.log(email)
+        console.log(password)
 
-          </div>
+        fetch('url', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => response.json())
+            .then(data => {
+                navigate('/')
+            })
 
+    }
 
-        )
-      })
     return (
-      <div className="row">
-        {listuser}
-      </div>
+        <div>
+            {/* <input type="text" id="emails" onChange={(e)=>{e.target.value}}></input>
+           <br />
+           <button type="button" onClick={check}>Submit</button> */}
+
+            <input type="email" id="email" onChange={(e) => { setEmail(e.target.value) }} required></input>
+            <input type="password" id="password" onChange={(e) => { setPassword(e.target.value) }} required></input>
+            <button type="button" onClick={check}>Submit</button>
+        </div>
     )
-  }
+
 
 }
 
-export default ListUser
+export default Add
+
