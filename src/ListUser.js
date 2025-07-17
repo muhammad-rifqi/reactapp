@@ -39,11 +39,21 @@ const User = () => {
     const [thn, bln, tgl] = usia.split('-').map(Number);
     const tanggalLahirnya = new Date(thn, bln - 1, tgl);
     const usianya = cekUmur(tanggalLahirnya);
-    setTahun(usianya.tahun)  
+    setTahun(usianya.tahun)
     setBulan(usianya.bulan);
   }
 
   const check = async () => {
+
+    if (name === "" || tgl_lahir === "" || email === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Harap Disini Datanya!",
+      });
+
+      return;
+    }
     const body = {
       "name": name,
       "birth_date": tgl_lahir,
@@ -56,23 +66,25 @@ const User = () => {
     const header = {
       'Content-Type': 'application/json',
     }
-    axios.post('https://nci.rifhandi.com/api/user', body , { headers : header })
+    axios.post('https://nci.rifhandi.com/api/user', body, { headers: header })
       .then(response => {
-       console.log(response.data);
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "Success",
-        //   text: "Data Berhasil Disimpan!",
-        // });
-        // navigate('/konfirmasi')
+        console.log(response.data)
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message+'Silahkan Klik Untuk Konfirmasi Data',
+        }).then(function(){
+          window.location.href='/konfirmasi/'+response.data.last_id;
+        })
+        // navigate('/konfirmasi/'+response.data.last_id);
       })
       .catch(error => {
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Error",
-        //   text: error,
-        // });
-         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.response.data.message,
+        });
+        return;
       });
 
   }
@@ -90,7 +102,7 @@ const User = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="#t">Home <span className="sr-only">(current)</span></a>
+              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
             </li>
             {/* <li className="nav-item">
               <a className="nav-link" href="#t">Tentang Kami</a>
@@ -108,19 +120,19 @@ const User = () => {
         <div className="form-group row">
           <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tanggal Lahir</label>
           <div className="col-sm-10">
-            <input type="date" className="form-control" id="birth_date" onChange={(e) => handleUmur(e.target.value)} required />
+            <input type="date" className="form-control" id="birth_date" min="1925-12-31" max="2025-12-31" onChange={(e) => handleUmur(e.target.value)} required />
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Umur(Tahun)</label>
           <div className="col-sm-10">
-            <input type="number" className="form-control" id="age_years" onChange={(e) => {setTahun(e.target.value) }}  value={tahunlhr || 0} required />
+            <input type="number" className="form-control" id="age_years" onChange={(e) => { setTahun(e.target.value) }} value={tahunlhr || 0} required />
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Umur(Bulan)</label>
           <div className="col-sm-10">
-            <input type="number" className="form-control" id="age_months" onChange={(e) => {setBulan(e.target.value) }} value={bulanlhr || 0} required />
+            <input type="number" className="form-control" id="age_months" onChange={(e) => { setBulan(e.target.value) }} value={bulanlhr || 0} required />
           </div>
         </div>
         {/* defaultValue={0} ini pada value form html */}
