@@ -37,9 +37,9 @@ const Detail = () => {
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
-                        {/* <li className="nav-item">
-              <a className="nav-link" href="#t">Tentang Kami</a>
-            </li> */}
+                        <li className="nav-item">
+                            <a className="nav-link" href="/userlist">Daftar Pengguna</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
