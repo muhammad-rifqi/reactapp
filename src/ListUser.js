@@ -2,7 +2,9 @@ import React, { useState } from "react";
 // import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useDispatch } from 'react-redux';
+import { setFormData } from "./slice/formSlice";
+import { setLogin } from "./slice/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 const User = () => {
   const [name, setName] = useState("");
@@ -11,7 +13,6 @@ const User = () => {
   const [bulanlhr, setBulan] = useState();
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
-  const [rows , setFormUser] = useState();
   // const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,6 +46,7 @@ const User = () => {
     setBulan(usianya.bulan);
   }
 
+
   const check = async () => {
 
     if (name === "" || tgl_lahir === "" || email === "") {
@@ -64,32 +66,40 @@ const User = () => {
       "address": alamat,
       "email": email
     }
-    
-    dispatch(setFormUser(body));
-    console.log(rows)
-    const header = {
-      'Content-Type': 'application/json',
+    dispatch(setFormData(body));
+
+    const pengguna = {
+      "name": "Muhammad Rifqi",
     }
-    axios.post('https://nci.rifhandi.com/api/user', body, { headers: header })
-      .then(response => {
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: response.data.message + ' Silahkan Klik Untuk Konfirmasi Data',
-        }).then(function () {
-          // window.location.href='/konfirmasi/'+response.data.last_id;
-          window.location.href = '/userlist';
-        })
-        // navigate('/konfirmasi/'+response.data.last_id);
-      })
-      .catch(error => {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: error.response.data.message,
-        });
-        return;
-      });
+
+    dispatch(setLogin({
+      user: pengguna,
+      token: 'abc123token'
+    }));
+
+    // const header = {
+    //   'Content-Type': 'application/json',
+    // }
+    // await axios.post('https://nci.rifhandi.com/api/user', body, { headers: header })
+    //   .then(response => {
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: "Success",
+    //       text: response.data.message + ' Silahkan Klik Untuk Konfirmasi Data',
+    //     }).then(function () {
+    //       // window.location.href='/konfirmasi/'+response.data.last_id;
+    //       window.location.href = '/userlist';
+    //     })
+    //     // navigate('/konfirmasi/'+response.data.last_id);
+    //   })
+    //   .catch(error => {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Error",
+    //       text: error.response.data.message,
+    //     });
+    //     return;
+    //   });
 
   }
 

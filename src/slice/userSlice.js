@@ -1,22 +1,25 @@
-// src/features/userForm/userFormSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  formData: null,
+  user: null,
+  token: null,
 };
 
-const userFormSlice = createSlice({
-  name: 'userForm',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    setFormData: (state, action) => {
-      state.formData = action.payload;
+    setLogin: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    clearFormData: (state) => {
-      state.formData = null;
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
     },
   },
 });
 
-export const { setFormData, clearFormData } = userFormSlice.actions;
-export default userFormSlice.reducer;
+export const { setLogin, logout } = authSlice.actions;
+export default authSlice.reducer;

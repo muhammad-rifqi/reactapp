@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { persistor } from './store';
 import axios from "axios";
 
 const Detail = () => {
@@ -22,6 +23,8 @@ const Detail = () => {
     if (loading) return <p align="center">Loading...</p>;
     if (error) return <p align="center">Error: {error.message}</p>;
 
+    persistor.purge();
+    
     return (
         <div className="container">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
