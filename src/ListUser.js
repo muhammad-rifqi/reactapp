@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { useDispatch } from 'react-redux';
 
 const User = () => {
   const [name, setName] = useState("");
@@ -11,7 +11,9 @@ const User = () => {
   const [bulanlhr, setBulan] = useState();
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
+  const [rows , setFormUser] = useState();
   // const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function cekUmur(tgllahir) {
     const hariIni = new Date();
@@ -62,7 +64,9 @@ const User = () => {
       "address": alamat,
       "email": email
     }
-
+    
+    dispatch(setFormUser(body));
+    console.log(rows)
     const header = {
       'Content-Type': 'application/json',
     }
