@@ -77,29 +77,29 @@ const User = () => {
       token: 'abc123token'
     }));
 
-    // const header = {
-    //   'Content-Type': 'application/json',
-    // }
-    // await axios.post('https://nci.rifhandi.com/api/user', body, { headers: header })
-    //   .then(response => {
-    //     Swal.fire({
-    //       icon: "success",
-    //       title: "Success",
-    //       text: response.data.message + ' Silahkan Klik Untuk Konfirmasi Data',
-    //     }).then(function () {
-    //       // window.location.href='/konfirmasi/'+response.data.last_id;
-    //       window.location.href = '/userlist';
-    //     })
-    //     // navigate('/konfirmasi/'+response.data.last_id);
-    //   })
-    //   .catch(error => {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Error",
-    //       text: error.response.data.message,
-    //     });
-    //     return;
-    //   });
+    const header = {
+      'Content-Type': 'application/json',
+    }
+    await axios.post('https://nci.rifhandi.com/api/user', body, { headers: header })
+      .then(response => {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message + ' Silahkan Klik Untuk Konfirmasi Data',
+        }).then(function () {
+          // window.location.href='/konfirmasi/'+response.data.last_id;
+          window.location.href = '/userlist';
+        })
+        // navigate('/konfirmasi/'+response.data.last_id);
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.response.data.message,
+        });
+        return;
+      });
 
   }
 
