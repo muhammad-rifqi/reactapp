@@ -3,6 +3,7 @@ import ListUser from './ListUser';
 import DetailUser from './DetailUser';
 import NotFound from './NotFound';
 import UserList from './UserList'
+import Sample from './Sample'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
         <Route exact path='/' element={<ListUser />} />
         <Route path='/konfirmasi/:id' element={<DetailUser />} />
         <Route path='/userlist' element={<UserList />} />
+         <Route path='/sample' element={<Sample />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
